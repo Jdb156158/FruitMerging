@@ -1,4 +1,4 @@
-# FruitMerging · 瓜体实验室
+# FruitMerging · 水果实验室
 
 提供 `dist/index.html` 网页版和 `dist/phone.html` 手机壳版。
 
