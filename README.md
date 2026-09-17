@@ -2,6 +2,11 @@
 
 提供 `dist/index.html` 网页版和 `dist/phone.html` 手机壳版。
 
+## 体验地址
+
+- [网页版](https://jdb156158.github.io/FruitMerging/)
+- [手机壳版](https://jdb156158.github.io/FruitMerging/phone.html)
+
 ## 本地运行
 
 ```sh
