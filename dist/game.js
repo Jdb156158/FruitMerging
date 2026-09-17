@@ -4,6 +4,9 @@ const W=500,H=600,N=18,TAU=Math.PI*2,reduced=matchMedia('(prefers-reduced-motion
 let score=0,best=0,energy=100,aim=250,current=0,next=0,cooldown=0,paused=false,ended=false,muted=true,audio,loaded=false,hasWon=false,toastUntil=0,heldTilt=0,combo=0,lastMerge=-10;
 let effects=[],ripples=[],sprites=[],last=0,accumulator=0,uiClock=0;
 const keys=new Set(),dialog=$('dialog');
+const savedTheme=localStorage.getItem('fruit-lab-theme')||'lavender';
+document.documentElement.dataset.theme=savedTheme;
+document.querySelectorAll('[data-theme]').forEach(button=>{button.setAttribute('aria-pressed',String(button.dataset.theme===savedTheme));button.addEventListener('click',()=>{document.documentElement.dataset.theme=button.dataset.theme;localStorage.setItem('fruit-lab-theme',button.dataset.theme);document.querySelectorAll('[data-theme]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));});});
 try{best=Math.max(0,Number(localStorage.getItem('melon-lab-best'))||0);}catch{}
 $('best').textContent=best;
 function tone(frequency=420,length=.09){if(muted)return;try{audio??=new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume().catch(()=>{});const oscillator=audio.createOscillator(),gain=audio.createGain();oscillator.type='sine';oscillator.frequency.setValueAtTime(frequency,audio.currentTime);oscillator.frequency.exponentialRampToValueAtTime(frequency*.55,audio.currentTime+length);gain.gain.setValueAtTime(.11,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+length);oscillator.connect(gain).connect(audio.destination);oscillator.start();oscillator.stop(audio.currentTime+length);}catch{}}
