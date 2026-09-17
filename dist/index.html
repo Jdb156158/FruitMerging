@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f1f2ff"><meta name="description" content="让水果像果冻一样挤压、变形和融合。切换流动性，搅动果池，合成你的大西瓜。">
+<title>瓜体实验室 · 半流体西瓜游戏</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M5 12a20 20 0 0040 0Z' fill='%2379ad77'/%3E%3Cpath d='M9 12a16 16 0 0032 0Z' fill='%23ff8792'/%3E%3Cpath d='M18 19l2 3m9-3l-2 3m-3 5v2' stroke='%23292b46' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="mobile.css"></head>
+<body><a class="view-switch" href="phone.html">▯ 手机壳版</a><script>if(new URLSearchParams(location.search).has("embed"))document.body.classList.add("embedded");</script>
+<svg class="symbols" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.2 9a3 3 0 015.6 1.3c-.8 1.5-2.8 1.6-2.8 3.7m0 3h.01"/></symbol>
+<symbol id="i-sound" viewBox="0 0 24 24"><path d="M11 4L6 8H3v8h3l5 4V4zm4 4a6 6 0 010 8m3-11a10 10 0 010 14"/></symbol>
+<symbol id="i-reset" viewBox="0 0 24 24"><path d="M20 9a8 8 0 10-1 8M20 4v5h-5"/></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+<symbol id="i-stir" viewBox="0 0 24 24"><path d="M9 8c-7-2-9 8-3 10 3 1 5-1 6-4m2-5c6 4 11-2 7-6-3-3-7-1-7 3m0 8c-1 7 8 10 10 4" transform="translate(-1 1) scale(.95)"/><circle cx="12" cy="11" r="1"/></symbol>
+<symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></symbol>
+<symbol id="i-crown" viewBox="0 0 24 24"><path d="m3 7 4 3 5-6 5 6 4-3-2 11H5Z"/></symbol>
+</defs></svg>
+<div class="app">
+<header>
+<a class="brand" href="./" aria-label="瓜体实验室首页"><span class="brand-melon"><svg viewBox="0 0 48 48"><path d="M4 10a21 21 0 0042 0Z" fill="#90b786"/><path d="M7 10a18 18 0 0036 0Z" fill="#eff5d8"/><path d="M10 10a15 15 0 0030 0Z" fill="#ff8d99"/><path d="m18 17 1 3m12-3-1 3m-5 5v2" stroke="#292b46" stroke-width="2" stroke-linecap="round"/></svg></span><span>瓜体实验室</span><small>MELON<br>LAB</small></a>
+<span class="tagline">半流体合成游戏</span>
+<nav aria-label="游戏控制"><button id="help" class="icon-button" aria-label="帮助"><svg><use href="#i-help"/></svg><span>帮助</span></button><button id="sound" class="icon-button" aria-label="声音" aria-pressed="false"><svg><use href="#i-sound"/></svg><span>声音</span></button><button id="pause" class="icon-button" aria-label="暂停"><svg><use href="#i-pause"/></svg><span>暂停</span></button><button id="restart" class="icon-button" aria-label="重开"><svg><use href="#i-reset"/></svg><span>重开</span></button></nav>
+</header>
+<main>
+<section class="intro" aria-label="游戏分数">
+<h1>让西瓜，<br>流动起来。</h1><span class="squiggle" aria-hidden="true"><svg viewBox="0 0 80 14"><path d="M2 10C8 0 12 0 19 7S29 14 36 7 47 0 54 7 65 14 78 5"/></svg></span>
+<p class="intro-copy">一点重力，一点弹性。<br>碰在一起，变成大西瓜。</p>
+<div class="scores"><div class="score-row"><svg class="crown"><use href="#i-crown"/></svg><span>当前分数</span><strong id="score">0</strong></div><div class="score-row"><svg><use href="#i-star"/></svg><span>最佳分数</span><strong id="best">0</strong></div></div>
+<div class="next"><span>下一颗</span><canvas id="next-fruit" width="144" height="144" aria-label="下一颗水果：葡萄"></canvas></div>
+</section>
+<section class="game-area" aria-label="半流体果池">
+<div class="aim-tip" id="aim-tip">移动瞄准 · 点击投放</div>
+<div class="canvas-wrap"><canvas id="game" width="1000" height="1200" tabindex="0" role="application" aria-label="水果投放区。左右方向键瞄准，回车投放，A D 倾斜，空格搅动，P 暂停。"></canvas><div id="loading">果冻正在凝结…</div><div id="toast" role="status" aria-live="polite"></div></div>
+<div class="mobile-tilt"><button id="tilt-left" aria-label="向左倾斜">向左倾斜</button><span>按住倾斜</span><button id="tilt-right" aria-label="向右倾斜">向右倾斜</button></div>
+</section>
+<aside class="physics">
+<h2>改变一点物理</h2>
+<div class="modes" role="group" aria-label="水果流动性"><button data-mode="jelly" aria-pressed="false">果冻</button><button data-mode="fluid" aria-pressed="true">半流体</button><button data-mode="juice" aria-pressed="false">果汁</button></div>
+<p id="mode-desc">柔软变形，缓缓流动</p>
+<button class="stir" id="stir"><svg><use href="#i-stir"/></svg>搅动果池</button><p class="energy-cost">消耗 30 能量</p>
+<div class="energy-row"><label for="energy">能量</label><progress id="energy" max="100" value="100">100</progress><span><b id="energy-value">100</b> / 100</span></div>
+<div class="rules"><p><span class="rule-bubbles" aria-hidden="true"><i></i><i></i></span>同类相遇，融合升级</p><p><svg aria-hidden="true"><use href="#i-stir"/></svg>挤压变形，填满缝隙</p><p><span class="rule-line" aria-hidden="true"></span>别让水果越过虚线</p></div>
+</aside>
+</main>
+<section class="evolution" aria-label="合成路线"><h2>合成路线<span class="squiggle" aria-hidden="true"><svg viewBox="0 0 80 14"><path d="M2 10C8 0 12 0 19 7S29 14 36 7 47 0 54 7 65 14 78 5"/></svg></span></h2><div id="fruit-route"></div></section>
+<footer><span>鼠标 / 触屏投放</span><span><kbd>A</kbd> <kbd>D</kbd> 倾斜</span><span><kbd>空格</kbd> 搅动</span><span class="key-help"><kbd>←</kbd><kbd>→</kbd> 瞄准 · <kbd>Enter</kbd> 投放</span></footer>
+</div>
+<dialog id="dialog" aria-labelledby="dialog-title"><div class="dialog-melon" aria-hidden="true"></div><h2 id="dialog-title"></h2><div id="dialog-body"></div><button id="dialog-action" class="stir"></button><button id="dialog-close" class="text-button">返回游戏</button></dialog>
+<script type="module" src="game.js"></script>
+</body></html>
